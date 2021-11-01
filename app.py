@@ -4,6 +4,8 @@ app = Flask(__name__)
 
 
 prodotti=[[1,'mozzarella',3],[2,'pasta',1],[3,'coca_cola','2']]
+
+#un prodotto è una lista composta da [id,nome,costo_unitario,quantità]
 carrello=[]
 
 @app.route("/")
@@ -22,8 +24,19 @@ def generate_page_list():
 def inserisci_prodotti():
     for prodotto in prodotti:
         value = request.form.getlist(prodotto[1])
+        gia_presente = False
         if value:
-            carrello.append(prodotto)
+            for item in carrello:
+                if item[1]==prodotto[1]:
+                    gia_presente=True;
+                    break
+
+            if gia_presente:
+                item[3]=item[3]+1;
+            else:
+                ennupla = prodotto.copy()
+                ennupla.append(1)
+                carrello.append(ennupla)
     return render_template('carrello.html',len=len(carrello),carrello=carrello)
 
 @app.route('/elimina_prodotti', methods=['POST'])
@@ -31,7 +44,17 @@ def elimina_prodotti():
     for prodotto in prodotti[:]:
         value = request.form.getlist(prodotto[1])
         if value:
-            carrello.remove(prodotto)
+            for item in carrello:
+                if item[1]==prodotto[1]:
+                    gia_presente=True;
+                    break
+            
+            if gia_presente and item[3]>1:
+                item[3]=item[3]-1;
+            else:
+                ennupla = prodotto.copy()
+                ennupla.append(1)
+                carrello.remove(ennupla)
     return render_template('carrello.html',len=len(carrello),carrello=carrello)
 
 

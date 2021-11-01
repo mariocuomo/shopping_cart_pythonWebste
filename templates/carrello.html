@@ -29,7 +29,7 @@
 			<form action="{{url_for('elimina_prodotti')}}" method="post" id="Form">
 					{%for i in range(0, len)%}
 						<input type="checkbox" id={{carrello[i][0]}} name={{carrello[i][1]}} value={{carrello[i][1]}} onclick='handleClick(this);'>
-		  				<label>{{carrello[i][1]}}</label><br>
+		  				<label>{{carrello[i][1]}} in quantità {{carrello[i][3]}}</label><br>
 					{%endfor%}
 					{% if len!=0 %}
 					<input type="submit" id="elimina" value="ELIMINA" disabled=true>
