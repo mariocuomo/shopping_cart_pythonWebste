@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>PRODOTTI</title>
+</head>
+<body>
+	<h1>ECCO LA LISTA DEI PRODOTTI CHE SONO NEL CARRELLO</h1>
+	{% if len==0 %}
+		<h2>carrello vuoto</h2>
+    {% endif %}
+
+	<div>
+		<ul>
+			{%for i in range(0, len)%}
+			<li>
+				{{carrello[i]}}
+			</li>
+			{%endfor%}
+  		</ul>
+
+	<form action="/back" method="post">
+	    <button type="submit">indietro</button>
+	</form>
+
+	</div>
+</body>
+</html>

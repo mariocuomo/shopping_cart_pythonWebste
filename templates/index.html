@@ -1,14 +1,27 @@
-{% import "macros.html" as macros %}
-
 <!DOCTYPE html>
 <html>
-  
 <head>
-    <title>HOME</title>
+	<meta charset="utf-8">
+	<title>PRODOTTI</title>
 </head>
-  
 <body>
-{{macros.build_site_navigation(pages=pages, selected="Page Name")}}
+	<h1>ECCO LA LISTA DEI PRODOTTI</h1>
+	<h2>SELEZIONA QUELLI CHE VUOI ACQUISTARE</h2>
+
+	<div>
+		<form action="{{url_for('inserisci_prodotti')}}" method="post">
+			{%for i in range(0, len)%}
+				<input type="checkbox" id={{prodotti[i][0]}} name={{prodotti[i][1]}} value={{prodotti[i][1]}}>
+  				<label for="vehicle1">{{prodotti[i][1]}}</label><br>
+			{%endfor%}
+			<input type="submit" value="AGGIUNGI">
+  		</form>
+
+
+	<form action="/carrello" method="post">
+	    <button type="submit">carrello</button>	
+	</form>
+
+	</div>
 </body>
-  
 </html>

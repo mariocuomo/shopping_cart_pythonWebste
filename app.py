@@ -6,10 +6,12 @@ app = Flask(__name__)
 
 pages = [{"name": "HOME", "url": "www.mario.com"}, {"name": "MEMBERS", "url": "www.members.com"}]
 
+prodotti=[[1,'mozzarella',3],[2,'pasta',1],[3,'coca cola','2']]
+carrello=[]
 
 @app.route("/")
 def index():
-    return render_template('index.html',pages=pages)
+    return render_template('index.html',len=len(prodotti), prodotti=prodotti)
 
 @app.route("/hello/<string:name>/")
 def hello(name):
@@ -18,6 +20,25 @@ def hello(name):
 def generate_page_list():
     pages = [{"name": "HOME", "url": "www.mario.com"}, {"name": "MEMBERS", "url": "www.members.com"}]
     return pages
+
+@app.route('/inserisci_prodotti', methods=['POST'])
+def inserisci_prodotti():
+    for prodotto in prodotti:
+        value = request.form.getlist(prodotto[1])
+        if value:
+            carrello.append(prodotto[1])
+    return render_template('carrello.html',len=len(carrello),carrello=carrello)
+
+
+@app.route("/back", methods=['POST'])
+def back():
+    return index()
+
+@app.route("/carrello", methods=['POST'])
+def mostra_carrello():
+    return render_template('carrello.html',len=len(carrello),carrello=carrello)
+
+
 
 
 if __name__ == "__main__":
