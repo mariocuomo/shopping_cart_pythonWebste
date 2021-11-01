@@ -1,12 +1,9 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
-from random import randint
 
 app = Flask(__name__)
 
 
-pages = [{"name": "HOME", "url": "www.mario.com"}, {"name": "MEMBERS", "url": "www.members.com"}]
-
-prodotti=[[1,'mozzarella',3],[2,'pasta',1],[3,'coca cola','2']]
+prodotti=[[1,'mozzarella',3],[2,'pasta',1],[3,'coca_cola','2']]
 carrello=[]
 
 @app.route("/")
@@ -26,7 +23,15 @@ def inserisci_prodotti():
     for prodotto in prodotti:
         value = request.form.getlist(prodotto[1])
         if value:
-            carrello.append(prodotto[1])
+            carrello.append(prodotto)
+    return render_template('carrello.html',len=len(carrello),carrello=carrello)
+
+@app.route('/elimina_prodotti', methods=['POST'])
+def elimina_prodotti():
+    for prodotto in prodotti[:]:
+        value = request.form.getlist(prodotto[1])
+        if value:
+            carrello.remove(prodotto)
     return render_template('carrello.html',len=len(carrello),carrello=carrello)
 
 
@@ -37,7 +42,6 @@ def back():
 @app.route("/carrello", methods=['POST'])
 def mostra_carrello():
     return render_template('carrello.html',len=len(carrello),carrello=carrello)
-
 
 
 
