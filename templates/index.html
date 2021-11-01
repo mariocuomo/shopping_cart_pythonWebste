@@ -5,16 +5,32 @@
 	<title>PRODOTTI</title>
 </head>
 <body>
+	<script>
+		function handleClick(cb) {
+			var form = document.getElementById('Form');
+			var controls = form.elements;
+
+	    for (var i=0; i<controls.length; i++) {
+	        if(controls[i].checked){
+  				document.getElementById('aggiungi').disabled = false;
+  				return
+  			}
+	    }
+			document.getElementById('aggiungi').disabled = true;
+	}
+	</script>
+
+
 	<h1>ECCO LA LISTA DEI PRODOTTI</h1>
 	<h2>SELEZIONA QUELLI CHE VUOI ACQUISTARE</h2>
 
 	<div>
-	<form action="{{url_for('inserisci_prodotti')}}" method="post">
+	<form action="{{url_for('inserisci_prodotti')}}" method="post", id="Form">
 		{%for i in range(0, len)%}
-			<input type="checkbox" id={{prodotti[i][0]}} name={{prodotti[i][1]}} value={{prodotti[i][1]}}>
-				<label>{{prodotti[i][1]}}</label><br>
+			<input type="checkbox" id={{prodotti[i][0]}} name={{prodotti[i][1]}} value={{prodotti[i][1]}} onclick='handleClick(this)';>
+			<label>{{prodotti[i][1]}}</label><br>
 		{%endfor%}
-		<input type="submit" value="AGGIUNGI">
+		<input type="submit" value="AGGIUNGI" id="aggiungi" disabled=true>
 		</form>
 
 
