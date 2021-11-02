@@ -1,5 +1,6 @@
 # shopping_cart_pythonWebste
-A simple shopping cart as website developed in python and Flask
+A simple e-commerce website project developed with Python and Flask.<br>
+The project is currently in development.
 
 **TEAM** :computer:
 <ul type="circle">
