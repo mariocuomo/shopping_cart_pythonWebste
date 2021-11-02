@@ -10,7 +10,11 @@ carrello=[]
 
 @app.route("/")
 def index():
-    return render_template('index.html',len=len(prodotti), prodotti=prodotti)
+    return render_template('index.html')
+
+@app.route("/prodotti")
+def home():
+    return render_template('home.html',len=len(prodotti), prodotti=prodotti)
 
 @app.route("/hello/<string:name>/")
 def hello(name):
@@ -54,13 +58,13 @@ def elimina_prodotti():
             else:
                 ennupla = prodotto.copy()
                 ennupla.append(1)
-                carrello.remove(ennupla)
+                carrello.remove(prodotto)
     return render_template('carrello.html',len=len(carrello),carrello=carrello)
 
 
 @app.route("/back", methods=['POST'])
 def back():
-    return index()
+    return home()
 
 @app.route("/carrello", methods=['POST'])
 def mostra_carrello():
