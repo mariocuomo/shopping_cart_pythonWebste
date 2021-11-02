@@ -1,12 +1,26 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
+import sqlite3
 
 app = Flask(__name__)
 
+conn = sqlite3.connect("prodotti.db")
+cursor = conn.cursor()
+cursor.execute("""SELECT * from prodotti""")
+prodotti = cursor.fetchall()
+prodotti = [list(ele) for ele in prodotti] 
+print(prodotti)
 
-prodotti=[[1,'mozzarella',3],[2,'pasta',1],[3,'coca_cola','2']]
 
 #un prodotto è una lista composta da [id,nome,costo_unitario,quantità]
 carrello=[]
+
+
+
+
+
+
+
+
 
 @app.route("/")
 def index():
@@ -15,6 +29,7 @@ def index():
 @app.route("/prodotti")
 def home():
     return render_template('home.html',len=len(prodotti), prodotti=prodotti)
+
 
 @app.route("/hello/<string:name>/")
 def hello(name):
@@ -62,11 +77,12 @@ def elimina_prodotti():
     return render_template('carrello.html',len=len(carrello),carrello=carrello)
 
 
-@app.route("/back", methods=['POST'])
+@app.route("/back", methods=['GET'])
 def back():
     return home()
 
-@app.route("/carrello", methods=['POST'])
+
+@app.route("/carrello", methods=['GET'])
 def mostra_carrello():
     return render_template('carrello.html',len=len(carrello),carrello=carrello)
 
