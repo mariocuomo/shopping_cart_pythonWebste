@@ -10,5 +10,6 @@ The project is currently in development.
 
 
 <p align="center">
- <img src="https://github.com/mariocuomo/shopping_cart_pythonWebste/blob/main/example.png">
+  <img src="https://github.com/mariocuomo/shopping_cart_pythonWebste/blob/main/example1.png">
+  <img src="https://github.com/mariocuomo/shopping_cart_pythonWebste/blob/main/example2.png">
 </p>
