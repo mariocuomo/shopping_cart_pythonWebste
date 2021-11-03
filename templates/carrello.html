@@ -3,34 +3,22 @@
 	<head>
 		<meta charset="utf-8">
 		<title>CARRELLO</title>
+		 <script type="text/javascript" src="{{ url_for('static', filename='functions.js') }}"></script>
 	</head>
 	<body>
-		<script>
-  			function handleClick(cb) {
-  				var form = document.getElementById('Form');
-  				var controls = form.elements;
-
-			    for (var i=0; i<controls.length; i++) {
-			        if(controls[i].checked){
-		  				document.getElementById('elimina').disabled = false;
-		  				return
-		  			}
-			    }
-  				document.getElementById('elimina').disabled = true;
-			}
-		</script>
-
 		<h1>CARRELLO</h1>
+
 		{% if len==0 %}
-			<h2>carrello vuoto</h2>
+			<h2>CARRELLO VUOTO</h2>
 	    {% endif %}
 
 		<div>
 			<form action="{{url_for('elimina_prodotti')}}" method="post" id="Form">
 					{%for i in range(0, len)%}
-						<input type="checkbox" id={{carrello[i][0]}} name={{carrello[i][1]}} value={{carrello[i][1]}} onclick='handleClick(this);'>
+						<input type="checkbox" id={{carrello[i][0]}} name={{carrello[i][1]}} value={{carrello[i][1]}} onclick='handleClick_carrello(this);'>
 		  				<label>{{carrello[i][1]}} in quantità {{carrello[i][3]}}</label><br>
 					{%endfor%}
+					
 					{% if len!=0 %}
 					<input type="submit" id="elimina" value="ELIMINA" disabled=true>
 					{% endif %}

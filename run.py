@@ -56,18 +56,15 @@ def inserisci_prodotti():
 def elimina_prodotti():
     for prodotto in prodotti[:]:
         value = request.form.getlist(prodotto[1])
+
         if value:
             for item in carrello:
-                if item[1]==prodotto[1]:
-                    gia_presente=True;
-                    break
-            
-            if gia_presente and item[3]>1:
-                item[3]=item[3]-1;
-            else:
-                ennupla = prodotto.copy()
-                ennupla.append(1)
-                carrello.remove(prodotto)
+                if item[0]==prodotto[0]:
+                    if item[3]>1:
+                        item[3]=item[3]-1;
+                    else:
+                        carrello.remove(item)
+                        
     return render_template('carrello.html',len=len(carrello),carrello=carrello)
 
 
