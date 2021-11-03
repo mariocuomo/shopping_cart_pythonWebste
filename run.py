@@ -8,8 +8,10 @@ cursor = conn.cursor()
 cursor.execute("""SELECT * from prodotti""")
 prodotti = cursor.fetchall()
 prodotti = [list(ele) for ele in prodotti] 
-print(prodotti)
 
+cursor.execute("""SELECT * from prodotti_posizione""")
+prodotti_posizione = cursor.fetchall()
+prodotti_posizione= [list(ele) for ele in prodotti_posizione] 
 
 #un prodotto è una lista composta da [id,nome,costo_unitario,quantità]
 carrello=[]
@@ -22,7 +24,7 @@ def index():
 
 @app.route("/prodotti")
 def home():
-    return render_template('home.html',len=len(prodotti), prodotti=prodotti)
+    return render_template('home.html',len=len(prodotti), prodotti=prodotti, prodotti_posizione=prodotti_posizione)
 
 
 @app.route("/hello/<string:name>/")
