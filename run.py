@@ -9,11 +9,8 @@ cursor.execute("""SELECT * from prodotti""")
 prodotti = cursor.fetchall()
 prodotti = [list(ele) for ele in prodotti] 
 
-cursor.execute("""SELECT * from prodotti_posizione""")
-prodotti_posizione = cursor.fetchall()
-prodotti_posizione= [list(ele) for ele in prodotti_posizione] 
 
-#un prodotto è una lista composta da [id,nome,costo_unitario,quantità]
+#un prodotto è una lista composta da [id,nome,costo_unitario,quantità, posizione_image]
 carrello=[]
 
 
@@ -24,7 +21,7 @@ def index():
 
 @app.route("/prodotti")
 def home():
-    return render_template('home.html',len=len(prodotti), prodotti=prodotti, prodotti_posizione=prodotti_posizione)
+    return render_template('home.html',len=len(prodotti), prodotti=prodotti)
 
 
 @app.route("/hello/<string:name>/")
@@ -37,6 +34,7 @@ def generate_page_list():
 
 @app.route('/inserisci_prodotti', methods=['POST'])
 def inserisci_prodotti():
+    totale=0
     for prodotto in prodotti:
         value = request.form.getlist(prodotto[1])
         gia_presente = False
@@ -47,27 +45,35 @@ def inserisci_prodotti():
                     break
 
             if gia_presente:
-                item[3]=item[3]+1;
+                item[4]=item[4]+1;
             else:
                 ennupla = prodotto.copy()
                 ennupla.append(1)
                 carrello.append(ennupla)
-    return render_template('carrello.html',len=len(carrello),carrello=carrello)
+            
+    for prodotto in carrello:
+        totale=totale+(prodotto[4]*prodotto[2])
+
+    return render_template('carrello.html',len=len(carrello),carrello=carrello,totale=totale)
 
 @app.route('/elimina_prodotti', methods=['POST'])
 def elimina_prodotti():
+    totale=0
     for prodotto in prodotti[:]:
         value = request.form.getlist(prodotto[1])
 
         if value:
             for item in carrello:
                 if item[0]==prodotto[0]:
-                    if item[3]>1:
-                        item[3]=item[3]-1;
+                    if item[4]>1:
+                        item[4]=item[4]-1;
                     else:
                         carrello.remove(item)
+        
+    for prodotto in carrello:
+        totale=totale+(prodotto[4]*prodotto[2])
                         
-    return render_template('carrello.html',len=len(carrello),carrello=carrello)
+    return render_template('carrello.html',len=len(carrello),carrello=carrello, totale=totale)
 
 
 @app.route("/back", methods=['GET'])
@@ -77,7 +83,10 @@ def back():
 
 @app.route("/carrello", methods=['GET'])
 def mostra_carrello():
-    return render_template('carrello.html',len=len(carrello),carrello=carrello)
+    totale=0
+    for prodotto in carrello:
+        totale=totale+(prodotto[4]*prodotto[2])
+    return render_template('carrello.html',len=len(carrello),carrello=carrello,totale=totale)
 
 
 

@@ -15,7 +15,7 @@
 		{%for i in range(0, len)%}
 			<input type="checkbox" id={{prodotti[i][0]}} name={{prodotti[i][1]}} value={{prodotti[i][1]}} onclick='handleClick_home(this)';>
 			<label>{{prodotti[i][1]}}<label><br>
-		  	<img src="{{url_for('static', filename=prodotti_posizione[i][1])}}" width="30" height="30" style="padding-left: 25px;"/>
+		  	<img src="{{url_for('static', filename=prodotti[i][3])}}" width="30" height="30" style="padding-left: 25px;"/>
 			<br>
 			<span style="padding-left: 25px;">€{{prodotti[i][2]}}</span>
 			<br>
