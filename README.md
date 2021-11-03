@@ -13,6 +13,3 @@ The project is currently in development.
 <p align="center">
  <img src="https://github.com/mariocuomo/shopping_cart_pythonWebste/blob/main/example.png">
 </p>
-
----
-
